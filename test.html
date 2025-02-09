@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        margin: 0;
+      }
+
+      h2 {
+        font-size: 2rem;
+        color: #333;
+        margin-bottom: 20px;
+      }
+
+      p {
+        font-size: 1.2rem;
+        font-weight: bold;
+        color: #008000;
+        min-height: 30px;
+      }
+
+      form {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        width: 250px;
+      }
+
+      button {
+        background-color: #3498db;
+        color: white;
+        border: none;
+        padding: 12px;
+        font-size: 1rem;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background 0.3s;
+      }
+
+      button:hover {
+        background-color: #217dbb;
+      }
+
+      #pasar {
+        margin-top: 20px;
+        background-color: #2ecc71;
+      }
+
+      #pasar:hover {
+        background-color: #27ae60;
+      }
+    </style>
+
+    <h2 id="palabra"></h2>
+    <p id="verificacion"></p>
+
+    <form id="ctnvl">
+      <button type="submit" id="bto1"></button>
+      <button type="submit" id="bto2"></button>
+      <button type="submit" id="bto3"></button>
+    </form>
+
+    <button id="pasar">pasar</button>
+
+    <script>
+      const palabras = [
+        { id: 1, espanol: "lanzar", ingles: "throw" },
+        { id: 2, espanol: "poder", ingles: "can" },
+        { id: 3, espanol: "comer", ingles: "eat" },
+        { id: 4, espanol: "beber", ingles: "drink" },
+        { id: 5, espanol: "correr", ingles: "run" },
+        { id: 6, espanol: "saltar", ingles: "jump" },
+        { id: 7, espanol: "leer", ingles: "read" },
+        { id: 8, espanol: "escribir", ingles: "write" },
+        { id: 9, espanol: "dormir", ingles: "sleep" },
+        { id: 10, espanol: "nadar", ingles: "swim" },
+        { id: 11, espanol: "mirar", ingles: "look" },
+        { id: 12, espanol: "escuchar", ingles: "listen" },
+        { id: 13, espanol: "caminar", ingles: "walk" },
+        { id: 14, espanol: "decir", ingles: "say" },
+        { id: 15, espanol: "ver", ingles: "see" },
+        { id: 16, espanol: "tocar", ingles: "touch" },
+        { id: 17, espanol: "pensar", ingles: "think" },
+        { id: 18, espanol: "trabajar", ingles: "work" },
+        { id: 19, espanol: "jugar", ingles: "play" },
+        { id: 20, espanol: "ayudar", ingles: "help" },
+        { id: 21, espanol: "conducir", ingles: "drive" },
+        { id: 22, espanol: "volar", ingles: "fly" },
+        { id: 23, espanol: "dibujar", ingles: "draw" },
+        { id: 24, espanol: "pintar", ingles: "paint" },
+        { id: 25, espanol: "comprar", ingles: "buy" },
+        { id: 26, espanol: "vender", ingles: "sell" },
+        { id: 27, espanol: "abrir", ingles: "open" },
+        { id: 28, espanol: "cerrar", ingles: "close" },
+        { id: 29, espanol: "bailar", ingles: "dance" },
+        { id: 30, espanol: "cantar", ingles: "sing" },
+      ];
+
+      let palabraActual = null;
+
+      function generarPregunta() {
+        let idRDP = Math.floor(Math.random() * palabras.length);
+        palabraActual = palabras[idRDP];
+
+        let opciones = [palabraActual];
+        while (opciones.length < 3) {
+          let randomPalabra =
+            palabras[Math.floor(Math.random() * palabras.length)];
+          if (!opciones.includes(randomPalabra)) {
+            opciones.push(randomPalabra);
+          }
+        }
+
+        opciones = opciones.sort(() => Math.random() - 0.5); // Mezcla las opciones
+
+        document.getElementById("palabra").innerText = palabraActual.ingles;
+        document.getElementById("bto1").value = opciones[0].espanol;
+        document.getElementById("bto1").innerText = opciones[0].espanol;
+        document.getElementById("bto2").value = opciones[1].espanol;
+        document.getElementById("bto2").innerText = opciones[1].espanol;
+        document.getElementById("bto3").value = opciones[2].espanol;
+        document.getElementById("bto3").innerText = opciones[2].espanol;
+
+        document.getElementById("verificacion").innerText = "";
+      }
+
+      document.getElementById("ctnvl").addEventListener("submit", (e) => {
+        e.preventDefault();
+        let respuesta = e.submitter.value;
+        if (respuesta === palabraActual.espanol) {
+          document.getElementById(
+            "verificacion"
+          ).innerText = `${respuesta}: ¡Correcto! 🎉`;
+        } else {
+          document.getElementById(
+            "verificacion"
+          ).innerText = `${respuesta}: Incorrecto ❌`;
+        }
+      });
+
+      document.getElementById("pasar").addEventListener("click", () => {
+        generarPregunta();
+      });
+
+      // Inicializar la primera pregunta
+      generarPregunta();
+    </script>
+  </body>
+</html>
