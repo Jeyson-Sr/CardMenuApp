@@ -7,12 +7,11 @@ import {
 } from "../func/FunctionCardMemory";
 import { useState, useEffect } from "react";
 
-const fetchUser = async (): Promise<Palabras[]> => {
-  const response = await fetch("/public/data/palabras.json");
-  return response.json();
-};
-
 export function CardMemory() {
+  const fetchUser = async (): Promise<Palabras[]> => {
+    const response = await fetch("/public/data/palabras.json");
+    return response.json();
+  };
   const [pregunta, setPregunta] = useState<Palabras[]>([]);
   const [gnPregunta, setGnPregunta] = useState<Palabras[]>([]);
   const [palabraCorrecta, setPalabraCorrecta] = useState<Palabras | null>(null);
