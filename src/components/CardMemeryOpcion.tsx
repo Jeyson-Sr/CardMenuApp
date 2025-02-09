@@ -6,12 +6,10 @@ import {
   StreakDisplay,
 } from "../func/FunctionCardMemory";
 import { useState, useEffect } from "react";
+import { data } from "../data/palabras";
+
 
 export function CardMemory() {
-  const fetchUser = async (): Promise<Palabras[]> => {
-    const response = await fetch("/public/data/palabras.json");
-    return response.json();
-  };
   const [pregunta, setPregunta] = useState<Palabras[]>([]);
   const [gnPregunta, setGnPregunta] = useState<Palabras[]>([]);
   const [palabraCorrecta, setPalabraCorrecta] = useState<Palabras | null>(null);
@@ -21,16 +19,12 @@ export function CardMemory() {
   const [streak, setStreak] = useState(0);
   const [preguntasCorrectas, setPreguntasCorrectas] = useState(0);
   const [totalPreguntas, setTotalPreguntas] = useState(0);
-
+  
   useEffect(() => {
-    async function fetchData() {
-      const datos = await fetchUser();
-      setPregunta(datos);
-      generarNuevaPregunta(datos);
-    }
-    fetchData();
+      setPregunta(data);
+      generarNuevaPregunta(data);
   }, []);
-
+  
   useEffect(() => {
     if (streak === 0) return;
 
