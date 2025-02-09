@@ -8,7 +8,7 @@ import {
 import { useState, useEffect } from "react";
 
 const fetchUser = async (): Promise<Palabras[]> => {
-  const response = await fetch("/src/data/palabras.json");
+  const response = await fetch("/public/data/palabras.json");
   return response.json();
 };
 
