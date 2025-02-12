@@ -1,24 +1,23 @@
 import { Palabras } from "../Types/palabra";
 import {
-  BarraProgreso,
+  BarraRacha,
   Opciones,
   PalabraDisplay,
-  StreakDisplay,
+  RachaDisplay,
 } from "../func/FunctionCardMemory";
 import { useState, useEffect } from "react";
 import { data } from "../data/palabras";
 
 
-export function CardMemory() {
-  const [pregunta, setPregunta] = useState<Palabras[]>([]);
-  const [gnPregunta, setGnPregunta] = useState<Palabras[]>([]);
-  const [palabraCorrecta, setPalabraCorrecta] = useState<Palabras | null>(null);
-  const [palabrasNoAcertadas, setPalabrasNoAcertadas] = useState<Palabras[]>(
-    []
-  );
-  const [streak, setStreak] = useState(0);
-  const [preguntasCorrectas, setPreguntasCorrectas] = useState(0);
-  const [totalPreguntas, setTotalPreguntas] = useState(0);
+export function CardMemoryOpcion() {
+  const [pregunta, setPregunta] = useState<Palabras[]>([]);//Lista de palabras a traducir
+  
+  const [palabraActual, setPalabraActual] = useState<Palabras | null>(null);// guarda la palabra a traducir
+  const [gnPregunta, setGnPregunta] = useState<Palabras[]>([]);//Opciones de la traduccion de la palabra en ingles
+  const [palabrasNoAcertadas, setPalabrasNoAcertadas] = useState<Palabras[]>([]);// guarda las palabras que no se acertaron
+  const [racha, setRacha] = useState(0);//guarda la racha de traducciones correctas
+  const [preguntasCorrectas, setPreguntasCorrectas] = useState(0);//guarda las traducciones correctas
+  const [totalPreguntas, setTotalPreguntas] = useState(0);//guarda el total de traducciones respondidas
   
   useEffect(() => {
       setPregunta(data);
@@ -26,14 +25,14 @@ export function CardMemory() {
   }, []);
   
   useEffect(() => {
-    if (streak === 0) return;
+    if (racha === 0) return;
 
-    const timeout = setTimeout(() => setStreak(0), 3000);
+    const timeout = setTimeout(() => setRacha(0), 3000);
     return () => clearTimeout(timeout);
-  }, [streak]);
+  }, [racha]);
 
-  const increaseStreak = () => {
-    setStreak((prev) => prev + 1);
+  const increaseracha = () => {
+    setRacha((prev) => prev + 1);
   };
 
   function obtenerOpcionesAleatorias(lista: Palabras[], correcta: Palabras) {
@@ -52,7 +51,7 @@ export function CardMemory() {
     if (lista.length === 0) return;
 
     const palabraSeleccionada = lista[Math.floor(Math.random() * lista.length)];
-    setPalabraCorrecta(palabraSeleccionada);
+    setPalabraActual(palabraSeleccionada);
     setGnPregunta(obtenerOpcionesAleatorias(lista, palabraSeleccionada));
   }
 
@@ -60,15 +59,15 @@ export function CardMemory() {
     const respuesta = e.currentTarget.value;
     setTotalPreguntas((prev) => prev + 1);
 
-    if (respuesta === palabraCorrecta?.palabraEspanol) {
+    if (respuesta === palabraActual?.palabraEspanol) {
       setPreguntasCorrectas((prev) => prev + 1);
-      increaseStreak();
+      increaseracha();
       generarNuevaPregunta();
     } else {
-      if (!palabrasNoAcertadas.some((p) => p.id === palabraCorrecta?.id)) {
-        setPalabrasNoAcertadas((prev) => [...prev, palabraCorrecta!]);
+      if (!palabrasNoAcertadas.some((p) => p.id === palabraActual?.id)) {
+        setPalabrasNoAcertadas((prev) => [...prev, palabraActual!]);
       }
-      setStreak(0);
+      setRacha(0);
       generarNuevaPregunta();
     }
   }
@@ -76,10 +75,10 @@ export function CardMemory() {
   return (
     //quitar pt-15
     <div className=" w-full h-full pt-15 grid place-content-center">
-      <BarraProgreso correctas={preguntasCorrectas} total={totalPreguntas} />
-      <div className=" w-full p-4 flex flex-col md:flex-row gap-10 items-center justify-center relative">
-        <StreakDisplay streak={streak} />
-        <PalabraDisplay palabra={palabraCorrecta?.palabraIngles} />
+      <BarraRacha correctas={preguntasCorrectas} total={totalPreguntas} />
+      <div className=" w-full scale-90 sm:scale-100 p-4 flex flex-col md:flex-row gap-10 items-center justify-center relative">
+        <RachaDisplay racha={racha} />
+        <PalabraDisplay palabra={palabraActual?.palabraIngles} />
         <Opciones opciones={gnPregunta} handleClick={handleClick} />
       </div>
     </div>

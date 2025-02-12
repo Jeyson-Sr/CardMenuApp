@@ -1,7 +1,7 @@
 import { Palabras } from "../Types/palabra";
 import { motion } from "framer-motion";
 
-function BarraProgreso({
+function BarraRacha({
   correctas,
   total,
 }: {
@@ -10,7 +10,7 @@ function BarraProgreso({
 }) {
   return (
     <>
-      <div className=" w-70 flex flex-col  md:items-end md:justify-center float-end absolute top-5 right-7 ">
+      <div className=" scale-80 sm:scale-100 w-70 flex flex-col  md:items-end md:justify-center float-end absolute top-5 right-0 sm:right-7 ">
         <div className="md:w-40  bg-gray-200 rounded-full h-6 md:h-3 overflow-hidden ">
           <div
             className="bg-green-500 h-full transition-all"
@@ -27,9 +27,9 @@ function BarraProgreso({
 
 function PalabraDisplay({ palabra }: { palabra?: string }) {
   return (
-    <div className="bg-blue-300 rounded-4xl shadow-2xl">
-      <div className="front w-80 h-70 rounded-2xl flex items-center justify-center">
-        <h2 className="textFront text-3xl">{palabra ?? "Cargando..."}</h2>
+    <div className="bg-blue-300 rounded-4xl shadow-2xl ">
+      <div className="w-80 h-70 rounded-2xl flex items-center justify-center">
+        <h2 className="text-3xl select-none ">{palabra ?? "Cargando..."}</h2>
       </div>
     </div>
   );
@@ -58,22 +58,25 @@ function Opciones({
   );
 }
 
-function StreakDisplay({ streak }: { streak: number }) {
+function RachaDisplay({ racha }: { racha: number }) {
   return (
-    <div className="flex flex-col items-center gap-4 absolute top-5 left-1/2 transform -translate-x-1/2">
+    <div className=" flex flex-col items-center gap-4 absolute -top-8 left-1/2 transform -translate-x-1/2">
       <motion.div
-        key={streak}
+        key={racha}
         initial={{ scale: 1 }}
-        animate={{ scale: 1.5, color: streak >= 5 ? "#FFD700" : "#FF4500" }}
+        animate={{ scale: 1.5, color: racha >= 5 ? "#FFD700" : "#FF4500" }}
         transition={{ type: "spring", stiffness: 200 }}
         className={`text-4xl font-bold ${
-          streak == 0 ? "opacity-0" : "opacity-100"
+          racha == 0 ? "opacity-0" : "opacity-100"
         }`}
       >
-        🔥 {streak}
+        🔥 {racha}
       </motion.div>
     </div>
   );
 }
 
-export { BarraProgreso, PalabraDisplay, Opciones, StreakDisplay };
+
+
+
+export { BarraRacha, PalabraDisplay, Opciones, RachaDisplay };

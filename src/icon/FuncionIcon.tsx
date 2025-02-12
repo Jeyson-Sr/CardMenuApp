@@ -1,4 +1,3 @@
-import React from "react";
 
 interface IconProps {
   size?: number;
@@ -7,7 +6,7 @@ interface IconProps {
   path: string; // 🔥 Se pasa solo el `path` del SVG
 }
 
-const Icon: React.FC<IconProps> = ({ size = 24, color = "currentColor", className = "", path }) => {
+function Icon ({ size = 24, color = "currentColor", className = "", path }: IconProps)  {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
