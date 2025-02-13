@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { Aside } from "./components/Aside ";
-import { CardMemoryFlip } from "./components/CardMemeryFlip";
-import { CardMemoryOpcion } from "./components/CardMemeryOpcion";
+import { Aside } from "../src/components/layout/Aside";
+import { CardMemoryFlip } from "./components/cards/CardMemeryFlip";
+import { CardMemoryOpcion } from "./components/cards/CardMemeryOpcion";
 
 function App() {
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -30,11 +30,26 @@ function App() {
         {/* Contenido principal cambia dinámicamente */}
         <main className="flex-1 p-6 w-full h-screen transition-all duration-300">
           <Routes>
-            <Route path="/" element={<h1 className="text-center text-5xl text-black">Bienvenido</h1>} />
+            <Route
+              path="/"
+              element={
+                <h1 className="text-center text-5xl text-black">Bienvenido</h1>
+              }
+            />
             <Route path="/flip" element={<CardMemoryFlip />} />
-            <Route path="/inicio" element={<h1 className="text-9xl text-amber-900">Inicio</h1>}/>
+            <Route
+              path="/inicio"
+              element={<h1 className="text-9xl text-black">Inicio</h1>}
+            />
             <Route path="/opcion" element={<CardMemoryOpcion />} />
-            <Route path="*" element={<h1 className="text-9xl text-red-500 text-center">404 - Página no encontrada</h1>} />
+            <Route
+              path="*"
+              element={
+                <h1 className="text-9xl text-red-500 text-center">
+                  404 - Página no encontrada
+                </h1>
+              }
+            />
           </Routes>
         </main>
       </div>
